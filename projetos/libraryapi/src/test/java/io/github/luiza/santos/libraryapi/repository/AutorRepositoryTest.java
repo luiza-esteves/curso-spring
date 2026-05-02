@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,5 +38,29 @@ public class AutorRepositoryTest {
             autorEncontrado.setData_nascimento(LocalDate.of(2002,3,14));
             repository.save(autorEncontrado);
         }
+    }
+
+    @Test
+    public void listarTest(){
+        List<Autor> lista = repository.findAll();
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    public void countTest(){
+        System.out.println("Contagem de autores: "+repository.count());
+    }
+
+    @Test
+    public void deletePorIdTest(){
+        var id = UUID.fromString("56b617b2-b9a3-449f-9aa3-e08c63a802ba");
+        repository.deleteById(id);
+    }
+
+    @Test
+    public void deleteTest(){
+        var id = UUID.fromString("56b617b2-b9a3-449f-9aa3-e08c63a802ba");
+        var maria = repository.findById(id).get();
+        repository.delete(maria);
     }
 }
